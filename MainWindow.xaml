@@ -1,0 +1,277 @@
+﻿<Window x:Class="Diamond_Clicker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Diamond_Clicker"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="500" Width="850"
+        Closing="Window_Closing"
+        Background ="{DynamicResource Back_Color}">
+    <Window.Resources>
+        <Style TargetType="Button">
+
+        </Style>
+        <SolidColorBrush x:Key="Back_Color" Color="Snow"/>
+        <SolidColorBrush x:Key="Accent_Color" Color="Gainsboro"/>
+        <SolidColorBrush x:Key="Text_Color" Color="Black"/>
+    </Window.Resources>
+    <TabControl x:Name="Main_Tab">
+        <TabItem Header="本編"
+                 Background="Gray">
+            <Grid Background="{DynamicResource Back_Color}" Margin="0,0,0,0">
+                <TextBlock x:Name="Main_Text"
+                    Width="256"
+                    FontSize="15"
+                    Foreground="{DynamicResource Text_Color}"
+                    Text="00000000000000000000ダイヤ&#xA;00000000000000000000ダイヤ/クリック&#xA;00000000000000000000ダイヤ/秒" 
+                    Margin="10,9,0,359" 
+                    HorizontalAlignment="Left"/>
+                <Button x:Name="Main_Button"
+                        ToolTip="ココを押したらダイヤが増える"
+                        Click="Main_Button_Click"
+                        Width="256" Height="256"
+                        Margin="10,102,0,0" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="{DynamicResource Accent_Color}">
+                    <Image Width="240" Height="240"
+                        Source="/Content/Image/daiya.png"/>
+                </Button>
+                <ScrollViewer HorizontalAlignment="Right">
+                    <Grid Background="{DynamicResource Accent_Color}">
+                        <Button x:Name="Shop_Sale_Button"
+                                    ToolTip="在庫処分中です！買って下さい！"
+                                    Click="Shop_Sale_Button_Click"
+                                    VerticalAlignment="Top"
+                                    Height="80">
+                            <StackPanel Orientation="Horizontal"
+                                        Width="415" Height="70">
+                                <Image Width="70" Height="70"
+                                            HorizontalAlignment="Right"
+                                            Margin="0,0,0,0"
+                                            Source="/Content/Image/Sale.png"/>
+                                <TextBlock x:Name="Shop_Sale_Text"
+                                            Width="330"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Right"
+                                            FontSize="13"
+                                            Text="バーゲンセール:18446744073709551615&#xA;価格を最初の価格にする"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Shop_CkPlus_Button"
+                                    ToolTip="最凶栄養ドリンク新発売"
+                                    Click="Shop_CkPlus_Button_Click"
+                                    VerticalAlignment="Top"
+                                    Margin="0,85,0,0"
+                                    Height="80">
+                            <StackPanel Orientation="Horizontal"
+                                        Width="415" Height="70">
+                                <Image Width="70" Height="70"
+                                            HorizontalAlignment="Right"
+                                            Margin="0,0,0,0"
+                                            Source="/Content/Image/CkPlus.png"/>
+                                <TextBlock x:Name="Shop_CkPlus_Text"
+                                            Width="330"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Right"
+                                            FontSize="13"
+                                            Text=":18446744073709551615&#xA;1クリックごとのダイヤを18446744073709551615ダイヤ追加する"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Shop_SPlus_Button"
+                                        ToolTip="時を超える知識"
+                                        Click="Shop_SPlus_Button_Click"
+                                        VerticalAlignment="Top"
+                                        Margin="0,170,0,0"
+                                        Height="80">
+                            <StackPanel Orientation="Horizontal"
+                                            Width="415" Height="70">
+                                <Image Width="70" Height="70"
+                                            HorizontalAlignment="Right"
+                                            Margin="0,0,0,0"
+                                            Source="/Content/Image/Splus.png"/>
+                                <TextBlock x:Name="Shop_SPlus_Text"
+                                            Width="330"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Right"
+                                            FontSize="13"
+                                        Text=":18446744073709551615&#xA;1クリックごとのダイヤを18446744073709551615ダイヤ追加する"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Shop_Tsuruhashi_Button"
+                                        ToolTip="今まで素手でほってたの？"
+                                        Click="Shop_Tsuruhashi_Button_Click"
+                                        VerticalAlignment="Top"
+                                        Margin="0,255,0,0"
+                                        Height="80">
+                            <StackPanel Orientation="Horizontal"
+                                        Width="415" Height="70">
+                                <Image Width="70" Height="70"
+                                            HorizontalAlignment="Right"
+                                            Margin="0,0,0,0"
+                                            Source="/Content/Image/Thuruhashi.png"/>
+                                <TextBlock x:Name="Shop_Tsuruhashi_Text"
+                                            Width="330"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Right"
+                                            FontSize="13"
+                                            Text="ツルハシ:18446744073709551615&#xA;1クリックごとのダイヤを18446744073709551615ダイヤ追加する"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Shop_Doriru_Button"
+                                    ToolTip="電気のカでダイヤを増やす"
+                                    Click="Shop_Doriru_Button_Click"
+                                    VerticalAlignment="Top"
+                                    Margin="0,340,0,0"
+                                    Height="80">
+                            <StackPanel Orientation="Horizontal"
+                                        Width="415" Height="70">
+                                <Image Width="70" Height="70"
+                                            HorizontalAlignment="Right"
+                                            Margin="0,0,0,0"
+                                            Source="/Content/Image/Doriru.png"/>
+                                <TextBlock x:Name="Shop_Doriru_Text"
+                                            Width="330"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Right"
+                                            FontSize="13"
+                                            Text="ツルハシ:18446744073709551615&#xA;1クリックごとのダイヤを18446744073709551615ダイヤ追加する"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Shop_Kojou_Button"
+                                    ToolTip="大量生産最高効率産業革命"
+                                    Click="Shop_Kojou_Button_Click"
+                                    VerticalAlignment="Top"
+                                    Margin="0,425,0,0"
+                                    Height="80">
+                            <StackPanel Orientation="Horizontal"
+                                        Width="415" Height="70">
+                                <Image Width="70" Height="70"
+                                            HorizontalAlignment="Right"
+                                            Margin="0,0,0,0"
+                                            Source="/Content/Image/Kojou.png"/>
+                                <TextBlock x:Name="Shop_Kojou_Text"
+                                            Width="330"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Right"
+                                            FontSize="13"
+                                            Text="ツルハシ:18446744073709551615&#xA;1クリックごとのダイヤを18446744073709551615ダイヤ追加する"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Shop_Inbou_Button"
+                                    ToolTip="需要はなくし供給増やす"
+                                    Click="Shop_Inbou_Button_Click"
+                                    VerticalAlignment="Top"
+                                    Margin="0,510,0,0"
+                                    Height="80">
+                            <StackPanel Orientation="Horizontal"
+                                        Width="415" Height="70">
+                                <Image Width="70" Height="70"
+                                            HorizontalAlignment="Right"
+                                            Margin="0,0,0,0"
+                                            Source="/Content/Image/inbouron.png"/>
+                                <TextBlock x:Name="Shop_Inbou_Text"
+                                            Width="330"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Right"
+                                            FontSize="13"
+                                            Text="ツルハシ:18446744073709551615&#xA;1クリックごとのダイヤを18446744073709551615ダイヤ追加する"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Shop_Kodai_Button"
+                            ToolTip="古代のカで炭素を変換"
+                            Click="Shop_Kodai_Button_Click"
+                            VerticalAlignment="Top"
+                            Margin="0,595,0,0"
+                            Height="80">
+                            <StackPanel Orientation="Horizontal"
+                                Width="415" Height="70">
+                                <Image Width="70" Height="70"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,0,0,0"
+                                    Source="/Content/Image/Kodai.png"/>
+                                <TextBlock x:Name="Shop_Kodai_Text"
+                                    Width="330"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Right"
+                                    FontSize="13"
+                                    Text="ツルハシ:18446744073709551615&#xA;1クリックごとのダイヤを18446744073709551615ダイヤ追加する"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </TabItem>
+        <TabItem Header="ガチャガチャ"
+                 Background="Gray">
+            <Grid Background="{DynamicResource Back_Color}">
+                <TextBlock Foreground="{DynamicResource Text_Color}"
+                           FontSize="16"
+                           Text="勝利品:100ダイヤ&#10;敗北品:100ダイヤ" 
+                           Margin="294,10,284,362"/>
+                <Button x:Name="GatyaGatya_Button"
+                        ToolTip="確率1/10！"
+                        Width="256" Height="256"
+                        Background="{DynamicResource Accent_Color}"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        Margin="10,0,0,0"
+                        Click="GatyaGatya_Button_Click">
+                    <Image Width="230" Height="230"
+                           Source="/Content/Image/gatya.png"/>
+                </Button>
+            </Grid>
+        </TabItem>
+        <TabItem Header="設定"
+                 Background="Gray">
+            <Grid Background="{DynamicResource Back_Color}">
+                <Button x:Name="Setting_Savedata_del" 
+            Width="256" Height="70"
+            Background="Gold"
+            FontSize="24"
+            FontWeight="Bold"
+            Click="Setting_Savedata_del_Click"
+            Content="⚠️セーブデータを削除⚠️"
+            HorizontalAlignment="Left"
+            Margin="10,10,0,0"
+            VerticalAlignment="Top"/>
+                <Button x:Name="Setting_Color_Button"
+            Background="{DynamicResource Accent_Color}"
+            Foreground="{DynamicResource Text_Color}"
+            FontSize="24"
+            Click="Setting_Color_Button_Click"
+            Content="ダークモードにする●"
+            Width="256" Height="70"
+            Margin="10,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            RenderTransformOrigin="0.4,0.515"/>
+                <Button x:Name="Setting_Help_Button"
+        Background="{DynamicResource Accent_Color}"
+        Foreground="{DynamicResource Text_Color}"
+        FontSize="24"
+        Content="フィードバック(github)"
+        Width="256" Height="70"
+        Margin="10,240,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+        RenderTransformOrigin="0.4,0.515" Click="Setting_Help_Button_Click"/>
+                <Button x:Name="Setting_Save_Button"
+        Background="{DynamicResource Accent_Color}"
+        Foreground="{DynamicResource Text_Color}"
+        FontSize="24"
+        Content="セーブする"
+        Width="256" Height="70"
+        Margin="10,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+        RenderTransformOrigin="0.4,0.515" Click="Setting_Save_Button_Click"/>
+                <TextBlock x:Name="Setting_Vertion"
+        FontSize="16"
+        HorizontalAlignment="Left" 
+        Margin="10,315,0,0" 
+        TextWrapping="Wrap" 
+        Text="TextBlock" 
+        VerticalAlignment="Top"/>
+
+            </Grid>
+
+        </TabItem>
+    </TabControl>
+</Window>
