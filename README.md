@@ -10,3 +10,9 @@
 > [!IMPORTANT]
 
 > コードからビルドする場合ContentフォルダにSoundを追加してそこにNo.wav、Ok.wav、Tsuruhashi.wavを追加して下さい
+
+<br>
+<br>
+
+※1:対象人数1名
+※2:土、日、祝日以外やその他開発が困難な場合を除く
