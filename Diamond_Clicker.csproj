@@ -12,7 +12,6 @@
   <ItemGroup>
     <None Remove="Content\Image\gatya.png" />
     <None Remove="Content\Image\Inbouron.png" />
-    <None Remove="Content\Sound\No.wav" />
     <None Remove="Content\Sound\Ok.wav" />
     <None Remove="Content\Sound\Tsuruhashi.wav" />
     <None Remove="Content\Sound\Yes.wav" />
@@ -49,9 +48,6 @@
     <Content Include="Content\Image\Thuruhashi.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sound\No.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\Sound\Ok.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -64,6 +60,9 @@
   <ItemGroup>
     <None Update="Content\Audio\Yes.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\Sound\No.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -89,6 +88,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>

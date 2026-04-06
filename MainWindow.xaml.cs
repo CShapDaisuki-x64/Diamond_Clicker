@@ -619,7 +619,6 @@ namespace Diamond_Clicker
             Tmp_Shop_Old_String = "工場";
             Shop(ref Inbou_int);
         }
-
         private void GatyaGatya_Button_Click(object sender, RoutedEventArgs e)
         {
             int RandomGatya = R.Next(11);
