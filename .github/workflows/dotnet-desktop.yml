@@ -1,0 +1,115 @@
+# このワークフローでは、GitHub によって認定されていないアクションを使用します。
+# これらは第三者によって提供され、以下によって管理されます
+# 個別の利用規約、プライバシー ポリシー、サポート
+# ドキュメント。
+
+# このワークフローは、WPF または Windows フォームのデスクトップ アプリケーションを構築、テスト、署名、パッケージ化します
+# 上に構築されています。NET コア。
+# 既存のアプリケーションを に移行する方法については、こちらをご覧ください。NETコア、
+# 参照 https://docs。microsoft。com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework
+#
+# このワークフローを構成するには:
+#
+# 1。環境変数を設定します
+# GitHub は、ワークフローの実行ごとにデフォルトの環境変数を設定します。
+# 以下の「env」セクションで、プロジェクトに関連する変数を置き換えます。
+#
+# 2。署名
+# Windowsアプリケーションで署名証明書を生成する
+# プロジェクトをパッケージ化するか、既存の署名証明書をプロジェクトに追加します。
+# 次に、PowerShellを使用してBase64エンコードを使用して。pfxファイルをエンコードします
+# 次の Powershell スクリプトを実行して出力文字列を生成します
+#
+# $pfx_cert = Get-Content '.\SigningCertificate。pfx' -エンコードバイト
+# [System。Convert]::ToBase64String($pfx_cert）| 出力ファイル 'SigningCertificate_Encoded。txt'
+#
+# 出力ファイルSigningCertificate_Encoded。txtを開き、
+# 内部に文字列。次に、文字列をGitHubシークレットとしてリポジトリに追加します
+# そしてそれを「Base64_Encoded_Pfx」と名付けます
+# 署名証明書の設定方法の詳細については、こちらをご覧ください
+# このワークフローについては、https://github。com/microsoft/github-actions-for-desktop-apps#signingを参照してください
+#
+# 最後に、署名証明書のパスワードをシークレットとしてリポジトリに追加し、「Pfx_Key」という名前を付けます。
+# シークレットがどのように使用されるかについては、以下の「Windows アプリケーション パッケージング プロジェクトの構築」を参照してください。
+#
+# GitHub Actions の詳細については、https://github。com/features/actions を参照してください
+# デスクトップアプリケーション向けのGitHub Actionワークフローを開始するための完全なCI/CDサンプルについては、
+# 参照 https://github。com/microsoft/github-actions-for-desktop-apps
+
+名前: . 。NETコアデスクトップ
+
+オン:
+ 押す:
+ 枝: [ 「マスター」 ]
+ プル_リクエスト:
+ 枝: [ 「マスター」 ]
+
+仕事:
+
+ ビルド:
+
+ 戦略:
+ 行列:
+ 構成: [デバッグ, リリース]
+
+ 走り続ける: 最新のウィンドウ # 利用可能なランナーの種類のリストについては、を参照してください
+                             # https://help。github。com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+
+ 環境:
+ ソリューション_名前: あなたのソリューション名 # ソリューション名に置き換えます。MyWpfApp。sln。
+ テスト_プロジェクト_パス: テストプロジェクトパス # テストプロジェクトへのパスに置き換えます。MyWpfApp。Tests\MyWpfApp。Tests。csproj。
+ Wap_プロジェクト_ディレクトリ: あなたのワッププロジェクトディレクトリ名 # ソリューションを基準としたWapプロジェクトディレクトリに置き換えます。MyWpfApp。パッケージ。
+      Wap_Project_Path: your-wap-project-path                   # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # Install the .NET Core workload
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v2
+
+    # Execute all unit tests in the solution
+    - name: Execute unit tests
+      run: dotnet test
+
+    # Restore the application to populate the obj folder with RuntimeIdentifiers
+    - name: Restore the application
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    # Decode the base 64 encoded pfx and save the Signing_Certificate
+    - name: Decode the pfx
+      run: |
+        $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
+        $certificatePath = Join-Path -Path $env:Wap_Project_Directory -ChildPath GitHubActionsWorkflow.pfx
+        [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+
+    # Create the app package by building and packaging the Windows Application Packaging project
+    - name: Create the app package
+      run: msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
+      env:
+        Appx_Bundle: Always
+        Appx_Bundle_Platforms: x86|x64
+        Appx_Package_Build_Mode: StoreUpload
+        Configuration: ${{ matrix.configuration }}
+
+    # Remove the pfx
+    - name: Remove the pfx
+      run: Remove-Item -path $env:Wap_Project_Directory\GitHubActionsWorkflow.pfx
+
+    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: MSIX Package
+        path: ${{ env.Wap_Project_Directory }}\AppPackages
